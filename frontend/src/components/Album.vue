@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     async fetchAlbums() {
-      const response = await axios.get("/albums");
+      const response = await axios.get("/s/albums");
       return response.data;
     },
     selectAlbum(albums) {

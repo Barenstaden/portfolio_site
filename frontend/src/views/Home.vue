@@ -54,7 +54,7 @@ export default {
     };
   },
   async created() {
-    const response = await axios.get("/forside");
+    const response = await axios.get("/s/forside");
     if (response.data) this.frontPage = response.data;
   },
   computed: {

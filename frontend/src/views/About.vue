@@ -16,13 +16,13 @@ import axios from "axios";
 export default {
   data() {
     return {
-      aboutPage: null,
+      aboutPage: null
     };
   },
   async created() {
-    const aboutPage = await axios.get("/om");
+    const aboutPage = await axios.get("/s/om");
     this.aboutPage = aboutPage.data;
-  },
+  }
 };
 </script>
 
