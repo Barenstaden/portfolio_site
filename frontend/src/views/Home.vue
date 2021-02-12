@@ -42,8 +42,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script>
 import axios from "axios";
 
 export default {
@@ -51,7 +50,7 @@ export default {
     return {
       frontPage: null,
       selectedImage: "",
-      hoveredImage: "",
+      hoveredImage: ""
     };
   },
   async created() {
@@ -61,8 +60,8 @@ export default {
   computed: {
     backgroundImage() {
       return `background: url('${this.frontPage.bakgrunnsbilde.url}') center; backround-position: cover;`;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
