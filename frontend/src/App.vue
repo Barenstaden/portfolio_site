@@ -33,6 +33,7 @@
   padding-top: 15px;
   position: fixed;
   background-color: #333;
+  z-index: 999;
   right: 0;
   left: 0;
   line-height: 40px;
@@ -40,6 +41,7 @@
 #nav #home {
   position: fixed;
   left: 20px;
+  z-index: 999999;
 }
 #nav #menu {
   right: 0;

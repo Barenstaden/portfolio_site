@@ -15,7 +15,7 @@
           id="mainImage"
           class="swiper"
           :options="swiperOptionsGallery"
-          ref="swiperTop"
+          ref="swiper"
         >
           <swiper-slide v-for="image in album.bilder" :key="image.id">
             <img :src="image.bilde.url" class="swiper-lazy" />
@@ -36,7 +36,8 @@
           v-for="(image, index) in album.bilder"
           :key="image.id"
           :src="image.bilde.formats.thumbnail.url"
-          :class="{ selectedImage: activeImage == index }"
+          :class="{ selectedImage: activeImage == index + 1 }"
+          @click="openImage(image.tittel)"
         />
       </b-col>
     </b-row>
@@ -49,14 +50,15 @@
           v-for="album in allAlbums"
           :key="album.id"
         >
-          <router-link :to="`/album/${album.tittel_album.toLowerCase()}`">
-            <h3>{{ album.tittel_album }}</h3>
-            <img
-              class="thumbnail"
-              v-for="image in album.bilder"
-              :key="image.id"
-              :src="image.bilde.formats.thumbnail.url"
-            />
+          <h3>{{ album.tittel_album }}</h3>
+          <router-link
+            :to="
+              `/album/${album.tittel_album.toLowerCase()}/${image.tittel.toLowerCase()}`
+            "
+            v-for="image in album.bilder"
+            :key="image.id"
+          >
+            <img class="thumbnail" :src="image.bilde.formats.thumbnail.url" />
           </router-link>
         </b-col>
       </b-col>
@@ -75,7 +77,7 @@ import "swiper/swiper-bundle.css";
 export default {
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
   data() {
     return {
@@ -85,24 +87,24 @@ export default {
         spaceBetween: 50,
         loop: true,
         pagination: {
-          el: ".swiper-pagination",
+          el: ".swiper-pagination"
         },
         navigation: {
           nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
+          prevEl: ".swiper-button-prev"
+        }
       },
       album: [],
       allAlbums: [],
-      activeImage: "",
+      activeImage: ""
     };
   },
   async created() {
     this.allAlbums = await this.fetchAlbums();
     this.selectAlbum(this.allAlbums);
 
-    this.swiper.on("slideChangeTransitionEnd", (swiper) => {
-      this.activeImage = swiper.realIndex;
+    this.swiper.on("slideChangeTransitionEnd", swiper => {
+      this.activeImage = swiper.realIndex + 1;
     });
   },
   methods: {
@@ -113,7 +115,7 @@ export default {
     selectAlbum(albums) {
       if (this.albumToView) {
         this.album = albums.find(
-          (album) => album.tittel_album.toLowerCase() == this.albumToView
+          album => album.tittel_album.toLowerCase() == this.albumToView
         );
       } else {
         this.album = albums[0];
@@ -124,29 +126,31 @@ export default {
       window.scroll({
         top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: "smooth"
       });
     },
-    openImage(imageTitle) {
+    openImage(image) {
       const index = this.album.bilder.findIndex(
-        (image) => image.tittel == imageTitle
+        img => img.tittel.toLowerCase() == image
       );
-      this.swiperTop.slideTo(index);
-    },
+      console.log(index);
+      this.swiper.slideTo(index + 1);
+      this.activeImage = index + 2;
+    }
   },
   computed: {
     swiper() {
-      return this.$refs.swiperTop.$swiper;
+      return this.$refs.swiper.$swiper;
     },
     albumToView() {
       return "album" in this.$route.params ? this.$route.params.album : "";
-    },
+    }
   },
   watch: {
     $route() {
       this.selectAlbum(this.allAlbums);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -155,7 +159,7 @@ a {
   color: #333;
 }
 #mainImage img {
-  height: 80vh;
+  max-height: 80vh;
 }
 .swiper-pagination >>> .swiper-pagination-bullet {
   opacity: 1;
@@ -169,6 +173,8 @@ a {
   padding: 0;
 }
 img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   padding: 0;
   margin: 0;
@@ -187,7 +193,7 @@ img {
 #thumbnails img {
   opacity: 0.4;
   height: 100px;
-  width: 10%;
+  width: 160px;
 }
 .gallery-thumbs .swiper-slide {
   width: auto;

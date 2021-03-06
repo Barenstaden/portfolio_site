@@ -2,8 +2,8 @@
   <div v-if="frontPage">
     <b-container fluid :style="backgroundImage" id="frontPageHeader">
       <b-row>
-        <b-col class="mt-5">
-          <h1 class="pt-5">{{ frontPage.overskrift }}</h1>
+        <b-col>
+          <h1>{{ frontPage.overskrift }}</h1>
         </b-col>
       </b-row>
     </b-container>
@@ -59,7 +59,12 @@ export default {
   },
   computed: {
     backgroundImage() {
-      return `background: url('${this.frontPage.bakgrunnsbilde.url}') center; backround-position: cover;`;
+      return `
+      background-image: url('${this.frontPage.bakgrunnsbilde.url}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      `;
     }
   }
 };
@@ -67,7 +72,7 @@ export default {
 <style scoped>
 #frontPageHeader {
   color: #fff;
-  height: 60vh;
+  height: 80vh;
 }
 #frontPageHeader h1 {
   margin-top: 200px;
