@@ -17,6 +17,14 @@
     </stack>
 
     <b-modal centered v-model="showModal" size="lg" ok-title="Lukk" ok-only>
+      <div v-for="(image, i) in images" :key="image.id">
+        <div v-if="i == slide" class="text-center">
+          <h3>
+            {{ image.tittel }}
+          </h3>
+          <p>{{ image.beskrivelse }}</p>
+        </div>
+      </div>
       <b-carousel
         v-model="slide"
         :interval="0"
@@ -28,7 +36,6 @@
         <b-carousel-slide
           v-for="image in images"
           :key="image.id"
-          :caption="image.tittel ? image.tittel : ''"
           :img-src="image.bilde.url"
         ></b-carousel-slide>
       </b-carousel>
