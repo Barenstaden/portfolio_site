@@ -22,7 +22,7 @@
           <h3>
             {{ image.tittel }}
           </h3>
-          <p>{{ image.beskrivelse }}</p>
+          <p>📷 {{ image.beskrivelse }}</p>
         </div>
       </div>
       <b-carousel
