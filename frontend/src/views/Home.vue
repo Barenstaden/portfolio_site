@@ -7,35 +7,18 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-container fluid>
+    <b-container>
       <b-row>
-        <b-col
-          md="4"
-          class="image-wrapper"
-          v-for="image in frontPage.album.bilder"
-          :key="image.id"
-          :class="{ selected: selectedImage == image.id }"
-          @mouseover="hoveredImage = image.id"
-          @mouseleave="hoveredImage = ''"
-        >
-          <img :src="image.bilde.formats.medium.url" alt="" />
-
-          <transition name="fade">
-            <div class="image-info" v-if="hoveredImage == image.id">
-              <div class="image-info-header">
-                <h3>{{ image.tittel }}</h3>
-                <router-link
-                  :to="
-                    `/album/${frontPage.album.tittel_album.toLowerCase()}/${image.tittel.toLowerCase()}`
-                  "
-                  >Åpne stort bilde</router-link
-                >
-              </div>
-              <div class="image-info-description">
-                <p>{{ image.beskrivelse }}</p>
-              </div>
-            </div>
-          </transition>
+        <b-col class="text-center">
+          <h3 class="mt-5">{{ frontPage.album.tittel_album }}</h3>
+          <Album :images="frontPage.album.bilder" />
+        </b-col>
+      </b-row>
+      <b-row v-for="album in albums" :key="album.id">
+        <b-col class="text-center" v-if="album.id != frontPage.album.id">
+          <h3 class="mt-5">{{ album.tittel_album }}</h3>
+          <p>{{ album.beskrivelse_album }}</p>
+          <Album :images="album.bilder" />
         </b-col>
       </b-row>
     </b-container>
@@ -46,16 +29,28 @@
 import axios from "axios";
 
 export default {
+  components: {
+    Album: () => import("@/components/Album.vue")
+  },
   data() {
     return {
       frontPage: null,
       selectedImage: "",
-      hoveredImage: ""
+      hoveredImage: "",
+      albums: []
     };
   },
   async created() {
     const response = await axios.get("/s/forside");
     if (response.data) this.frontPage = response.data;
+
+    const albums = await axios.get("/s/albums");
+    this.albums = albums.data;
+  },
+  methods: {
+    getWidth(image) {
+      return image.bilde.width - (image.bilde.height - 300) + "px";
+    }
   },
   computed: {
     backgroundImage() {
@@ -72,20 +67,17 @@ export default {
 <style scoped>
 #frontPageHeader {
   color: #fff;
-  height: 80vh;
+  height: 50vh;
 }
 #frontPageHeader h1 {
   margin-top: 200px;
 }
-.image-wrapper {
-  padding: 0;
+.images {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  padding: 0;
-  margin: 0;
+  height: 400px;
 }
 .image-info {
   color: #fff;

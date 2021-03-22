@@ -20,11 +20,11 @@
     },
     "tittel": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "beskrivelse": {
       "type": "text",
-      "required": true
+      "required": false
     }
   }
 }

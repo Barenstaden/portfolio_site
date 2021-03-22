@@ -6,7 +6,7 @@
       </div>
       <div id="menu">
         <router-link to="/about">Om</router-link>
-        <router-link to="/album">Album</router-link>
+        <!-- <router-link to="/album">Album</router-link> -->
       </div>
     </div>
     <div id="content">
