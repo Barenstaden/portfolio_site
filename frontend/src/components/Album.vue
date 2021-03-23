@@ -10,7 +10,11 @@
         <img
           class="gallery-image"
           width="300px"
-          :src="image.image.formats.small.url"
+          :src="
+            image.image.formats && image.image.formats.small
+              ? image.image.formats.small.url
+              : image.image.url
+          "
           @click="selectedImage = image"
         />
       </stack-item>
@@ -77,6 +81,9 @@ export default {
   props: {
     images: Array,
     album: String
+  },
+  created() {
+    console.log(this.images);
   },
   data() {
     return {
