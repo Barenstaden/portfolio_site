@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "albums",
+  "collectionName": "comments",
   "info": {
-    "name": "Album",
+    "name": "Comment",
     "description": ""
   },
   "options": {
@@ -11,15 +11,15 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "title": {
+    "name": {
       "type": "string"
     },
-    "description": {
+    "comment": {
       "type": "text"
     },
-    "images": {
-      "via": "albums",
-      "collection": "image"
+    "image": {
+      "via": "comments",
+      "model": "image"
     }
   }
 }

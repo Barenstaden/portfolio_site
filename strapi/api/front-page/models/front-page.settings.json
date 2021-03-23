@@ -1,9 +1,8 @@
 {
   "kind": "singleType",
-  "collectionName": "forsides",
+  "collectionName": "front_pages",
   "info": {
-    "name": "Forside",
-    "description": ""
+    "name": "Front page"
   },
   "options": {
     "increments": true,
@@ -11,10 +10,13 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "overskrift": {
+    "header": {
       "type": "string"
     },
-    "bakgrunnsbilde": {
+    "text": {
+      "type": "text"
+    },
+    "background": {
       "model": "file",
       "via": "related",
       "allowedTypes": [

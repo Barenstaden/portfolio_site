@@ -2,24 +2,24 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/forside",
-      "handler": "forside.find",
+      "path": "/front-page",
+      "handler": "front-page.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/forside",
-      "handler": "forside.update",
+      "path": "/front-page",
+      "handler": "front-page.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/forside",
-      "handler": "forside.delete",
+      "path": "/front-page",
+      "handler": "front-page.delete",
       "config": {
         "policies": []
       }

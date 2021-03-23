@@ -16,8 +16,11 @@ Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
 
+import apolloProvider from "./apollo";
+
 new Vue({
   router,
   store,
+  apolloProvider,
   render: h => h(App)
 }).$mount("#app");

@@ -1,24 +1,25 @@
 <template>
   <div v-if="frontPage">
-    <b-container fluid :style="backgroundImage" id="frontPageHeader">
-      <b-row>
+    <b-container fluid>
+      <b-row :style="backgroundImage" id="frontPageHeader" align-v="center">
         <b-col>
-          <h1>{{ frontPage.overskrift }}</h1>
+          <h1>{{ frontPage.header }}</h1>
+          <h5>{{ frontPage.text }}</h5>
         </b-col>
       </b-row>
     </b-container>
     <b-container>
       <b-row>
         <b-col class="text-center">
-          <h3 class="mt-5">{{ frontPage.album.tittel_album }}</h3>
-          <Album :images="frontPage.album.bilder" />
+          <h3 class="mt-5">{{ frontPage.album.title }}</h3>
+          <Album :images="frontPage.album.images" :album="frontPage.album.id" />
         </b-col>
       </b-row>
       <b-row v-for="album in albums" :key="album.id">
         <b-col class="text-center" v-if="album.id != frontPage.album.id">
-          <h3 class="mt-5">{{ album.tittel_album }}</h3>
-          <p>{{ album.beskrivelse_album }}</p>
-          <Album :images="album.bilder" />
+          <h3 class="mt-5">{{ album.title }}</h3>
+          <p>{{ album.description }}</p>
+          <Album :images="album.images" :album="album.id" />
         </b-col>
       </b-row>
     </b-container>
@@ -26,36 +27,74 @@
 </template>
 
 <script>
-import axios from "axios";
-
+import gql from "graphql-tag";
 export default {
   components: {
     Album: () => import("@/components/Album.vue")
   },
   data() {
     return {
-      frontPage: null,
       selectedImage: "",
       hoveredImage: "",
       albums: []
     };
   },
-  async created() {
-    const response = await axios.get("/s/forside");
-    if (response.data) this.frontPage = response.data;
-
-    const albums = await axios.get("/s/albums");
-    this.albums = albums.data;
-  },
-  methods: {
-    getWidth(image) {
-      return image.bilde.width - (image.bilde.height - 300) + "px";
+  apollo: {
+    frontPage: {
+      query: gql`
+        query {
+          frontPage {
+            header
+            text
+            background {
+              url
+            }
+            album {
+              id
+              title
+              description
+              images {
+                id
+                image {
+                  url
+                }
+                description
+                title
+                comments {
+                  id
+                }
+              }
+            }
+          }
+        }
+      `
+    },
+    albums: {
+      query: gql`
+        query {
+          albums {
+            id
+            title
+            images {
+              id
+              title
+              description
+              image {
+                url
+              }
+              comments {
+                id
+              }
+            }
+          }
+        }
+      `
     }
   },
   computed: {
     backgroundImage() {
       return `
-      background-image: url('${this.frontPage.bakgrunnsbilde.url}');
+      background-image: url('${this.frontPage.background.url}');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -68,9 +107,6 @@ export default {
 #frontPageHeader {
   color: #fff;
   height: 50vh;
-}
-#frontPageHeader h1 {
-  margin-top: 200px;
 }
 .images {
   display: grid;
