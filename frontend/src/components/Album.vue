@@ -10,7 +10,11 @@
         <img
           class="gallery-image"
           width="300px"
-          :src="image.image.url"
+          :src="
+            image.image.formats && image.image.formats.small
+              ? image.image.formats.small.url
+              : image.image.url
+          "
           @click="selectedImage = image"
         />
       </stack-item>
@@ -55,7 +59,11 @@
         <b-carousel-slide
           v-for="image in images"
           :key="image.id"
-          :img-src="image.image.url"
+          :img-src="
+            image.image.formats && image.image.formats.small
+              ? image.image.formats.small.url
+              : image.image.url
+          "
         >
         </b-carousel-slide>
       </b-carousel>
