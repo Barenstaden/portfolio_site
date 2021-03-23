@@ -10,11 +10,7 @@
         <img
           class="gallery-image"
           width="300px"
-          :src="
-            image.image.formats && image.image.formats.small
-              ? image.image.formats.small.url
-              : image.image.url
-          "
+          :src="image.image.formats.small.url"
           @click="selectedImage = image"
         />
       </stack-item>
