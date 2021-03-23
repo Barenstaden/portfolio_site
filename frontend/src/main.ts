@@ -4,6 +4,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import VueGtag from "vue-gtag";
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import "bootstrap/dist/css/bootstrap.css";
@@ -24,6 +25,10 @@ const apolloClient = new ApolloClient({
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient
+});
+
+Vue.use(VueGtag, {
+  config: { id: "G-N7K7BNFTC9" }
 });
 
 Vue.use(VueApollo);

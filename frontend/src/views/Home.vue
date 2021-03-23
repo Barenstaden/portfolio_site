@@ -57,6 +57,7 @@ export default {
                 id
                 image {
                   url
+                  formats
                 }
                 description
                 title
@@ -81,6 +82,7 @@ export default {
               description
               image {
                 url
+                formats
               }
               comments {
                 id
