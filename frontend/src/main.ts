@@ -16,11 +16,23 @@ Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
 
-import apolloProvider from "./apollo";
+import ApolloClient from "apollo-boost";
+import VueApollo from "vue-apollo";
+const apolloClient = new ApolloClient({
+  uri: "/graphql"
+});
+
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient
+});
+
+Vue.use(VueApollo);
+
+Vue.use(VueApollo);
 
 new Vue({
   router,
   store,
-  apolloProvider,
+  provide: apolloProvider.provide(),
   render: h => h(App)
 }).$mount("#app");
