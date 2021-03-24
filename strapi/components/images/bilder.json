@@ -9,6 +9,9 @@
   "attributes": {
     "image": {
       "model": "image"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }

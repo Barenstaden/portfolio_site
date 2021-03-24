@@ -9,6 +9,9 @@
   "attributes": {
     "album": {
       "model": "album"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }
