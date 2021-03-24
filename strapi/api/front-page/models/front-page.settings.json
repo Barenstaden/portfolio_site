@@ -29,7 +29,9 @@
       "required": false
     },
     "albums": {
-      "collection": "album"
+      "type": "component",
+      "repeatable": true,
+      "component": "albums.albums"
     }
   }
 }

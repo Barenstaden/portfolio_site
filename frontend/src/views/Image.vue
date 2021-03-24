@@ -55,9 +55,9 @@
       </b-row>
     </b-container>
 
-    <b-container v-if="image" class="mt-5">
+    <b-container v-if="album" class="mt-5">
       <b-row>
-        <b-col v-for="album in image.albums" :key="album.id">
+        <b-col>
           <h3 class="text-left ml-3">Flere bilder fra dette albumet</h3>
           <Album
             :images="otherImagesFromAlbum(album.images)"
@@ -104,7 +104,7 @@ export default {
       }
     },
     otherImagesFromAlbum(images) {
-      return images.filter(image => image.id != this.image.id);
+      return images.filter(image => image.image.id != this.image.id);
     }
   },
   apollo: {
@@ -115,21 +115,6 @@ export default {
             title
             description
             id
-            albums {
-              id
-              title
-              images {
-                id
-                title
-                description
-                image {
-                  url
-                }
-                comments {
-                  id
-                }
-              }
-            }
             image {
               url
             }
@@ -145,6 +130,36 @@ export default {
       variables() {
         return {
           id: this.$route.params.image
+        };
+      }
+    },
+    album: {
+      query: gql`
+        query album($id: ID!) {
+          album(id: $id) {
+            id
+            images {
+              image {
+                title
+                description
+                id
+                comments {
+                  id
+                  name
+                  comment
+                  published_at
+                }
+                image {
+                  url
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables() {
+        return {
+          id: this.$route.params.album
         };
       }
     }

@@ -18,11 +18,9 @@
       "type": "text"
     },
     "images": {
-      "collection": "image",
-      "via": "albums"
-    },
-    "order": {
-      "type": "biginteger"
+      "type": "component",
+      "repeatable": true,
+      "component": "images.bilder"
     }
   }
 }

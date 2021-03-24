@@ -11,9 +11,9 @@
     <b-container>
       <b-row v-for="album in frontPage.albums" :key="album.id">
         <b-col class="text-center">
-          <h3 class="mt-5">{{ album.title }}</h3>
-          <p>{{ album.description }}</p>
-          <Album :images="album.images" :album="album.id" />
+          <h3 class="mt-5">{{ album.album.title }}</h3>
+          <p>{{ album.album.description }}</p>
+          <Album :images="album.album.images" :album="album.album.id" />
         </b-col>
       </b-row>
     </b-container>
@@ -43,19 +43,26 @@ export default {
             background {
               url
             }
-            albums (sort: "order:asc") {
+            albums {
               id
-              title
-              images {
-                id
+              album {
                 title
                 description
-                image {
-                  url
-                  formats
-                }
-                comments {
-                  id
+                id
+                images {
+                  image {
+                    id
+                    image {
+                      formats
+                      url
+                    }
+                    title
+                    comments {
+                      name
+                      comment
+                    }
+                    description
+                  }
                 }
               }
             }

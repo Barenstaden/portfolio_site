@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_bilder_bilders",
+  "info": {
+    "name": "image",
+    "icon": "images",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "model": "image"
+    }
+  }
+}

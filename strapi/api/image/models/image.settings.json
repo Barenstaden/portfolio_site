@@ -28,11 +28,6 @@
       "plugin": "upload",
       "required": false
     },
-    "albums": {
-      "via": "images",
-      "collection": "album",
-      "dominant": true
-    },
     "comments": {
       "collection": "comment",
       "via": "image"

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_albums_albums",
+  "info": {
+    "name": "albums",
+    "icon": "folder-open",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "album": {
+      "model": "album"
+    }
+  }
+}

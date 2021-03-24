@@ -6,16 +6,15 @@
       :gutter-height="15"
       monitor-images-loaded
     >
-      <stack-item v-for="image in images" :key="image.id">
+      <stack-item
+        v-for="imageComponent in images"
+        :key="imageComponent.image.image.id"
+      >
         <img
           class="gallery-image"
           width="300px"
-          :src="
-            image.image.formats && image.image.formats.small
-              ? image.image.formats.small.url
-              : image.image.url
-          "
-          @click="selectedImage = image"
+          :src="imageComponent.image.image.url"
+          @click="selectedImage = imageComponent.image"
         />
       </stack-item>
     </stack>
@@ -34,17 +33,14 @@
             :to="`/bilde/${album}/${image.id}`"
             class="comments-count"
           >
-            <b-icon-chat></b-icon-chat> {{ image.comments.length }}
+            <b-icon-chat></b-icon-chat> {{ image.image.comments.length }}
           </router-link>
-          <!-- <h3>
-            {{ image.title }}
-          </h3> -->
           <p class="mb-0">
-            <span class="mr-2">📷</span>{{ image.description }}
+            <span class="mr-2">📷</span>{{ image.image.description }}
           </p>
           <router-link
             v-if="!$route.params.image || $route.params.image != image.id"
-            :to="`/bilde/${album}/${image.id}`"
+            :to="`/bilde/${album}/${image.image.id}`"
             >Åpne full størrelse</router-link
           >
         </div>
@@ -57,13 +53,9 @@
         background="#ababab"
       >
         <b-carousel-slide
-          v-for="image in images"
-          :key="image.id"
-          :img-src="
-            image.image.formats && image.image.formats.small
-              ? image.image.formats.small.url
-              : image.image.url
-          "
+          v-for="imageComponent in images"
+          :key="imageComponent.image.image.id"
+          :img-src="imageComponent.image.image.url"
         >
         </b-carousel-slide>
       </b-carousel>
@@ -81,9 +73,6 @@ export default {
   props: {
     images: Array,
     album: String
-  },
-  created() {
-    console.log(this.images);
   },
   data() {
     return {
@@ -104,9 +93,11 @@ export default {
   watch: {
     selectedImage() {
       if (!this.selectedImage) return 0;
+      console.log(this.selectedImage.id);
       this.slide = this.images.findIndex(
-        image => image.id == this.selectedImage.id
+        image => image.image.id == this.selectedImage.id
       );
+      console.log(this.slide);
     },
     $route() {
       this.selectedImage = null;
