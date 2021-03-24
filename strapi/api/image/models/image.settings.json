@@ -29,8 +29,8 @@
       "required": false
     },
     "albums": {
-      "collection": "album",
       "via": "images",
+      "collection": "album",
       "dominant": true
     },
     "comments": {

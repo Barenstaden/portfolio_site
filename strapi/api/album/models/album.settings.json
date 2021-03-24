@@ -18,8 +18,11 @@
       "type": "text"
     },
     "images": {
-      "via": "albums",
-      "collection": "image"
+      "collection": "image",
+      "via": "albums"
+    },
+    "order": {
+      "type": "biginteger"
     }
   }
 }

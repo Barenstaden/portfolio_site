@@ -9,14 +9,8 @@
       </b-row>
     </b-container>
     <b-container>
-      <b-row>
+      <b-row v-for="album in frontPage.albums" :key="album.id">
         <b-col class="text-center">
-          <h3 class="mt-5">{{ frontPage.album.title }}</h3>
-          <Album :images="frontPage.album.images" :album="frontPage.album.id" />
-        </b-col>
-      </b-row>
-      <b-row v-for="album in albums" :key="album.id">
-        <b-col class="text-center" v-if="album.id != frontPage.album.id">
           <h3 class="mt-5">{{ album.title }}</h3>
           <p>{{ album.description }}</p>
           <Album :images="album.images" :album="album.id" />
@@ -49,43 +43,20 @@ export default {
             background {
               url
             }
-            album {
+            albums (sort: "order:asc") {
               id
               title
-              description
               images {
                 id
+                title
+                description
                 image {
                   url
                   formats
                 }
-                description
-                title
                 comments {
                   id
                 }
-              }
-            }
-          }
-        }
-      `
-    },
-    albums: {
-      query: gql`
-        query {
-          albums {
-            id
-            title
-            images {
-              id
-              title
-              description
-              image {
-                url
-                formats
-              }
-              comments {
-                id
               }
             }
           }
